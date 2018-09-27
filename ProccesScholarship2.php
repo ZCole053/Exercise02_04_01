@@ -7,7 +7,7 @@
     <script src="modernizr.custom.65897"></script>
 </head>
 <body>
-<h2>Procces Scholarship2</h2>
+<h2>Procces Scholarship 2</h2>
 <?php
 //keep track of error
     $errorCount = 0;
@@ -36,8 +36,10 @@
     
     <h2 style="text-align: center">Scholarship Form</h2>
     <form action="ProccesScholarship2.php" name="Scholarship" method="post">
+                                                            <!-- adding php to remeber input -->
         <p>First name: <input type="text" name="fName" value="<?php echo $firstName; ?>"></p>
-        <p>Last name: <input type="text" name="lName"></p>
+        <p>Last name: <input type="text" name="lName" value="<?php echo $lastName; ?>"></p>
+
         <p>
             <input type="reset" value="Clear Form">&nbsp;&nbsp;
             <input type="submit" value="Send Form">
@@ -53,10 +55,8 @@
         echo "$errorCount errors(s): please re-enter the information bellow.<br>\n";
         redisplayForm($firstName,$lastName);
     }else{
-
-    }
-
-    echo "Thank you for filling out the scholarship form, ". $firstName . " ". $lastName . ".";
+        echo "Thank you for filling out the scholarship form, ". $firstName . " ". $lastName . ".";
+    }  
 ?>
     
 </body>
