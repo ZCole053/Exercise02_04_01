@@ -26,6 +26,7 @@
     }
     if($displayForm){
 ?>
+<!-- another sticky with an if -->
 <form action="NumberForm.php" name="numberForm" method ="post" >
     <p>
         Enter a number: <input type="text" name="number" value="<?php echo $number;?>" >
