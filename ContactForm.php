@@ -31,6 +31,25 @@ function validateInput($data,$fieldName){
     return $retval;
 }
 
+function validateEmail($data,$fieldName){
+    global $errorCount;
+    if(empty($data)){
+        echo "\"$fieldName\" is a required field.<br>\n";
+        ++$errorCount;
+        $retval = "";
+    }else{
+        $retval = trim($data);
+        $retval = stripslashes($retval);
+        $pattern = "/^[\w-]+(\.[\w-]+)*@". "[\w-]+(\.[\w-]+)*". "(\.[a-z]{2,})$/i";
+        if(preg_match($pattern,$retval)== 0){
+            echo "\"$fieldName\" is not a valid e-mail address.<br>\n";
+            ++$errorCount;
+        }
+    }
+    return $retval;
+}
+
+
 function displayForm($sender,$email,$subject,$message){
 ?>
     <h2 style="text-aline:center">Contact Me</h2>
@@ -53,7 +72,7 @@ function displayForm($sender,$email,$subject,$message){
 
 if(isset($_POST['Submit'])){
     $sender = validateInput($_POST['Sender'], "Your Name");
-    $email = validateInput($_POST['Email'], "Your E-mail");
+    $email = validateEmail($_POST['Email'], "Your E-mail");
     $subject = validateInput($_POST['Subject'], "Subject");
     $message = validateInput($_POST['Message'], "Message");
     if($errorCount == 0){
@@ -69,11 +88,14 @@ if($showForm){
     }
     displayForm($sender,$email,$subject,$message);
 }else{
-    $result = true; //debug
+    $senderAddress = "$sender <$email>";
+    $headers = "From: $senderAddress\nCC:$senderAddress";
+    $result = mail("zcole053@west-mec.org", $subject,$message,$headers);
+
     if($result){
-        echo "<p>Your message has been sent.Thank You,". $sender . ".</p>\n";
+        echo "<p>Your message has been sent.Thank You, ". $sender . ".</p>\n";
     }else{
-        echo "<p.There was an error sending your message,". $sender. ".</p>\n";
+        echo "<p.There was an error sending your message, ". $sender. ".</p>\n";
     }
 }
 ?>
